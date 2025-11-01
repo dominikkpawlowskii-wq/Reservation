@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reservations.Page.PedometrPage"
+             Title="PedometrPage"
+             xmlns:viewModel="clr-namespace:Reservations.modelViews"
+             x:DataType="viewModel:PedometrViewModel"
+             Style="{DynamicResource navBarBackgroundColorStyle}">
+
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,auto,auto" Padding="10">
+            <Label Text="{Binding Title}" VerticalOptions="Center" FontAttributes="Bold" FontSize="25" Style="{DynamicResource labelStyle}"/>
+            <Image Style="{DynamicResource walletStyle}" Grid.Column="1" HorizontalOptions="End"/>
+            <Label Text="{Binding UserService.Account.NumberOfPoints, StringFormat='{0} pkt'}" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="20" Style="{DynamicResource labelStyle}"/>
+        </Grid>
+    </Shell.TitleView>
+
+
+    <VerticalStackLayout Spacing="10" Padding="10">
+        <Label HorizontalOptions="Center" Text="{Binding Date}" FontSize="25"/>
+        <BoxView HeightRequest="2" HorizontalOptions="Fill" Background="Grey"/>
+        <Grid RowDefinitions="auto,*,*" ColumnDefinitions="*,*">
+            <VerticalStackLayout>
+                <Label Text="kroki" Margin="30,0,0,0" FontSize="20"/>
+                <Image Source="step_icon.png" Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" Margin="20,0,0,0"/>
+            </VerticalStackLayout>
+            <Label Text="{Binding NumberOfStep}" Grid.Row="0" Grid.Column="2" HorizontalOptions="End" Margin="0,0,30,0" FontSize="60"/>
+            <Button Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Text}" FontSize="30" TextTransform="Uppercase" ImageSource="{Binding ImageSource}" Margin="0,130,0,0" Command="{Binding StartPedometrCommand}"/>
+        </Grid>
+
+    </VerticalStackLayout>
+</ContentPage>

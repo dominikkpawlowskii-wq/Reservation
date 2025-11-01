@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reservations.Page.ReservationPage"
+             xmlns:viewModel="clr-namespace:Reservations.modelViews"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             x:DataType="viewModel:ReservationViewModel"
+             Style="{DynamicResource navBarBackgroundColorStyle}">
+
+    <Shell.TitleView>
+        <Grid RowDefinitions="50" ColumnDefinitions="190">
+            <Label Text="{Binding Title}" VerticalOptions="Center" HorizontalOptions="End" FontAttributes="Bold" FontSize="25" Style="{DynamicResource labelStyle}"/>
+        </Grid>
+    </Shell.TitleView>
+
+    <Grid RowDefinitions="30,30,50,50,50" ColumnDefinitions="*,*" RowSpacing="5" Padding="20" Margin="0,100,0,0">
+        <Label Style="{DynamicResource labelStyle}" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Center" Text="{Binding TempClass.Restaurant.Name}" FontSize="20" FontAttributes="Bold"/>
+        <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" HorizontalOptions="Center">
+            <Image Style="{DynamicResource detailPinsStyle}" WidthRequest="30" HorizontalOptions="End"/>
+            <Label Style="{DynamicResource labelStyle}" Text="{Binding TempClass.FullAdress}" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+        <DatePicker Grid.Row="2" Date="{Binding Date}" Grid.ColumnSpan="2" Grid.Column="0" MinimumDate="{x:Static sys:DateTime.Now}" Style="{DynamicResource DateTextColorStyle}"/>
+        <TimePicker Grid.Row="3" Grid.Column="0" Time="{Binding Time}" Style="{DynamicResource TimeTextColorStyle}"/>
+        <Picker Grid.Row="3" SelectedItem="{Binding NumberPersons}" Grid.Column="1" ItemsSource="{Binding NumberOfPersons}" SelectedIndex="{Binding Index}" Style="{DynamicResource pickerTextColorStyle}"/>
+        <Button Grid.Row="4" Grid.ColumnSpan="2" Text="Rezerwuj" Style="{DynamicResource buttonStyle}" Command="{Binding GoToSummaryReservationPageCommand}"/>
+    </Grid>
+</ContentPage>

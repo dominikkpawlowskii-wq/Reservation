@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reservations.Page.SummaryReservationPage"
+             xmlns:viewModel="clr-namespace:Reservations.modelViews"
+             Title="{Binding Title}"
+             x:DataType="viewModel:SummaryViewModel"
+             Style="{DynamicResource navBarBackgroundColorStyle}">
+    <Grid RowDefinitions="*,auto" Padding="10">
+        <ScrollView Orientation="Vertical">
+            <Grid RowDefinitions="*,*,*,*,*">
+                <Label Style="{DynamicResource labelStyle}"  Text="Twoja rezerwacja" HorizontalOptions="Center" FontAttributes="Bold" FontSize="30" Margin="0,0,0,30"/>
+                <Label Style="{DynamicResource labelStyle}" Text="Szczegóły rezerwacji stolika" Grid.Row="1" FontAttributes="Bold" FontSize="15"/>
+                <Border Grid.Row="2" StrokeShape="10" Padding="0,0,0,30" >
+                    <Grid RowDefinitions="200,*,*,*,*" ColumnDefinitions="*,*" RowSpacing="10">
+                        <Image Source="{Binding ImageSource}" Grid.ColumnSpan="2" Aspect="Fill"/>
+                        <Label Style="{DynamicResource labelStyle}" Grid.Row="1" Text="{Binding TempClass.Restaurant.Name}" FontSize="30" Margin="10"/>
+                        <Image Style="{DynamicResource detailPinsStyle}" Grid.Row="2" HeightRequest="40" Grid.ColumnSpan="2" VerticalOptions="Start" HorizontalOptions="Start"/>
+
+                        <Label Style="{DynamicResource labelStyle}" Text="{Binding TempClass.FullAdress}" Grid.Row="2" Grid.Column="0" VerticalOptions="Center" Grid.ColumnSpan="2" Margin="50,0,0,0"/>
+
+                        <Label Grid.Row="3" Text="{Binding TempClass.Date}" HorizontalOptions="Center" Grid.ColumnSpan="2"/>
+                        <Label  Grid.Row="4" Text="{Binding TempClass.Time}" HorizontalOptions="Center"/>
+                        <Label Grid.Row="4" Text="{Binding TempClass.NumberOfPerson}" Grid.Column="2" HorizontalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="3" RowDefinitions="*,*,*" ColumnDefinitions="auto,*" RowSpacing="10">
+                    <Label Style="{DynamicResource labelStyle}" VerticalOptions="Center" Text="Koszty" FontAttributes="Bold" FontSize="15"/>
+                    <Label Style="{DynamicResource labelStyle}" Text="Cena" Grid.Row="1"/>
+                    <Label Style="{DynamicResource labelStyle}" Text="{Binding TempClass.TableRestaurants.FeeForTable, StringFormat='{0} zł'}" Grid.Row="1" Grid.Column="2" HorizontalOptions="End"/>
+
+                </Grid>
+
+                <Grid Grid.Row="4" ColumnDefinitions="*,*" RowDefinitions="*,*,*,*" RowSpacing="10">
+                    <Label Text="Punkty" FontSize="15" FontAttributes="Bold"/>
+                    <Label Grid.Row="1" Text="liczba punktów"/>
+                    <Label Text="{Binding TempClass.Account.NumberOfPoints, StringFormat='{0} pkt'}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End"/>
+                    <Label Text="punkty za rezerwacje" Grid.Row="2"/>
+                    <Label Text="{Binding PktForReservation, StringFormat='{0} pkt'}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End"/>
+                    <Label Text="liczba punktów po rezerwacji" Grid.Row="3"/>
+                    <Label Text="{Binding SumAllPkt, StringFormat='{0} pkt'}" HorizontalOptions="End" Grid.Row="3" Grid.Column="1"/>
+                </Grid>
+            </Grid>
+        </ScrollView>
+        <Button Grid.Row="1" Style="{DynamicResource buttonStyle}" Grid.ColumnSpan="2" CornerRadius="25" Margin="0,10,0,0" Text="Zarezerwuj i zapłać" Command="{Binding InvokePaymentCommand}"/>
+        <ActivityIndicator Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
+    </Grid>
+</ContentPage>
+

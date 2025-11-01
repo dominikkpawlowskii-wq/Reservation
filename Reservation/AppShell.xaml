@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Reservations.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Reservations"
+    xmlns:views="clr-namespace:Reservations.Page"
+    Shell.FlyoutBehavior="Disabled"
+    Title="reservations"
+    Shell.TabBarForegroundColor="Red"
+    Shell.TabBarTitleColor="Red">
+
+
+
+
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate views:TitlePage}"
+        Route="TitlePage" />
+
+    <TabBar Route="mainApp">
+        <ShellContent Title="Szukaj"
+                      Icon="look_icon.png"
+                      ContentTemplate="{DataTemplate views:LookPage}"
+                      Route="look" />
+
+        <ShellContent Title="Mapa"
+                      Icon="map_icon.png"
+                      ContentTemplate="{DataTemplate views:MapPage}"
+                      Route="map"/>
+
+        <ShellContent Title="Rezerwacje"
+                      Icon="reserved_icon.png"
+                      ContentTemplate="{DataTemplate views:ReservationsMyAccountPage}"
+                      Route="reservation"/>
+
+        <ShellContent Title="Krokomierz"
+                      Icon="pedometr_icon.png"
+                      ContentTemplate="{DataTemplate views:PedometrPage}"
+                      Route="pedometr"/>
+
+        <ShellContent  
+                      Title="Profil"
+                      Icon="account_icon.png"
+                      ContentTemplate="{DataTemplate views:ProfilPage}"
+                      Route="profil"/>
+    </TabBar>
+</Shell>

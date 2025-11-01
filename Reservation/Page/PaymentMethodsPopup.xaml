@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModel="clr-namespace:Reservations.modelViews"
+             x:Class="Reservations.Page.PaymentMethodsPopup"
+             x:DataType="viewModel:PaymentMethodViewModel"
+             HeightRequest="400"
+             WidthRequest="200"
+             BackgroundColor="Transparent">
+
+    <Border StrokeShape="10" BackgroundColor="White" Padding="15">
+        <Grid RowDefinitions="*,*">
+            <Label Text="Wybierz metode płatności" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+            <Border Grid.Row="1" StrokeThickness="0">
+                <Grid RowDefinitions="*" ColumnDefinitions="40,*,auto" ColumnSpacing="10">
+                    <Image Source="{Binding ImageSource}" Grid.Column="0"/>
+                    <Label Text="{Binding Text}" Grid.Column="1" VerticalOptions="Center"/>
+                    <RadioButton Grid.Column="2" IsChecked="{Binding IsChecked}"/>
+                </Grid>
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:PaymentMethodViewModel}}, Path=SwitchRadioButtonCommand}"/>
+                </Border.GestureRecognizers>
+                
+            </Border>
+        </Grid>
+    </Border>
+</toolkit:Popup>

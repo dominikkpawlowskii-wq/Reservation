@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reservations.Page.TitlePage"
+             xmlns:model="clr-namespace:Reservations.modelViews"
+             Title=""
+             Shell.NavBarIsVisible="False"
+             x:DataType="model:TitleViewModel"
+             Style="{DynamicResource navBarBackgroundColorStyle}">
+    <VerticalStackLayout>
+        <Border Style="{DynamicResource borderTitlePageStyle}" StrokeThickness="0">
+            <Label Text="ZnajdzStolik.pl"  VerticalOptions="Center" HorizontalOptions="Center" FontSize="30" FontAttributes="Bold" Style="{DynamicResource labelStyle}"/>
+        </Border>
+        <Button Text="Rejestracja" IsEnabled="True" Margin="10,200,10,0" Command="{Binding GoToRegisterPageCommand}" Style="{DynamicResource buttonStyle}"/>
+        <Label Text="Masz już konto ? zaloguj się" HorizontalOptions="Center" Margin="0,15,0,0" Style="{DynamicResource labelStyle}"/>
+        <Button Text="zaloguj się" IsEnabled="True" Margin="10,30,10,0" Command="{Binding GoToLoginPageCommand}" Style="{DynamicResource buttonStyle}"/>
+    </VerticalStackLayout>
+
+</ContentPage>

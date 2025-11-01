@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reservations.themes.lightTheme">
+
+    <Color x:Key="PageBackgroundColor" >White</Color>
+    <Color x:Key="textColor">Black</Color>
+    <Color x:Key="navigationBarColor">white</Color>
+    <Color x:Key="borderImageColor">lightGrey</Color>
+    <Color x:Key="backButtonColor">Black</Color>
+    <Color x:Key="buttonBackgroundColor">lightGrey</Color>
+    <Color x:Key="boxViewBackgroundColor">black</Color>
+    <Color x:Key="detailPageBorderBackgroundColor">white</Color>
+    <Color x:Key="borderTitleColor">LightGrey</Color>
+    <Style x:Key="right_arrow_icon_style" TargetType="Image">
+        <Setter Property="Source" Value="right_arrow_icon.png"/>
+    </Style>
+    <Style x:Key="reloadStyle" TargetType="Image">
+        <Setter Property="Source" Value="rotate_right.png"/>
+    </Style>
+    <Style x:Key="detailPinsStyle" TargetType="Image">
+        <Setter Property="Source" Value="pin_icon.png"/>
+    </Style>
+    <Style x:Key="wordStyle" TargetType="Image">
+        <Setter Property="Source" Value="world_icon.png"/>
+    </Style>
+    <Style x:Key="timeStyle" TargetType="Image">
+        <Setter Property="Source" Value="time_icon.png"/>
+    </Style>
+    <Style x:Key="closeButtonStyle" TargetType="Button">
+        <Setter Property="ImageSource" Value="close_icon.png"/>
+    </Style>
+    <Style x:Key="walletStyle" TargetType="Image">
+        <Setter Property="Source" Value="point_icon.png"/>
+    </Style>
+    <Style x:Key="cardStyle" TargetType="Image">
+        <Setter Property="Source" Value="card_icon.png"/>
+    </Style>
+    <Style x:Key="arrowDownStyle" TargetType="Image">
+        <Setter Property="Source" Value="arrow_down_icon.png"/>
+    </Style>
+</ResourceDictionary>

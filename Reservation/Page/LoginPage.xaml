@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:Reservations.modelViews"
+             x:Class="Reservations.Page.LoginPage"
+             Title="{Binding Title}"
+             x:DataType="model:LoginViewModel"
+             Style="{DynamicResource navBarBackgroundColorStyle}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding GoToBackPageCommand}"/>
+    </Shell.BackButtonBehavior>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Rejestracja" Command="{Binding GoToRegisterPageCommand}"/>
+    </ContentPage.ToolbarItems>
+    
+    <VerticalStackLayout Spacing="20" Padding="10">
+        <Label Text="Logowanie" FontSize="30" FontAttributes="Bold" HorizontalTextAlignment="Center" Style="{DynamicResource labelStyle}"/>
+
+        <Entry Placeholder="Email" x:Name="email" Text="{Binding Email}" Style="{DynamicResource entryColorTextStyle}" ClearButtonVisibility="WhileEditing"/>
+        <Label Text="Prosze wpisz poprawny adres email " TextColor="Red" IsVisible="{Binding InvalidEmail}"/>
+        <Entry Text="{Binding Password}" x:Name="password" Placeholder="Hasło" IsPassword="True" ClearButtonVisibility="WhileEditing" Style="{DynamicResource entryColorTextStyle}"/>
+
+        <Button Style="{DynamicResource buttonStyle}" Text="Zaloguj"  CornerRadius="50" Command="{Binding LoginCommand}" IsVisible="{Binding IsNotBusy}" IsEnabled="{Binding IsActive}"/>
+        <ActivityIndicator  IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"  VerticalOptions="Center" HorizontalOptions="Center"/>
+    </VerticalStackLayout>
+   
+</ContentPage>

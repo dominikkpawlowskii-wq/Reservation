@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reservations.Page.SettingPage"
+             xmlns:customView="clr-namespace:Reservations.CustomView"
+             xmlns:viewModel="clr-namespace:Reservations.modelViews"
+             x:DataType="viewModel:SettingViewModel"
+             Title="{Binding Title}"         
+             Shell.TabBarIsVisible="False"
+             Style="{DynamicResource navBarBackgroundColorStyle}">
+
+
+    <ScrollView Padding="10">
+        <Grid RowDefinitions="auto, auto " RowSpacing="10">
+            <customView:SettingItem Grid.Row="0"
+                            Text="Ciemny motyw"
+                            IsToggled="{Binding IsToggled}"/>
+
+            <BoxView Grid.Row="1" Style="{DynamicResource boxViewStyle}"/>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

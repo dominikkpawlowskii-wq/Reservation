@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reservations.Page.MyReservationDetailPage"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:viewModel="clr-namespace:Reservations.modelViews"
+             x:DataType="viewModel:MyReservationDetailViewModel"
+             Title="{Binding Title}">
+
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <Image HeightRequest="200" Aspect="AspectFill" Source="{Binding TempClass.RestaurantImage.Image}"/>
+                <Border StrokeThickness="0" Padding="10" Style="{DynamicResource detailBorderStyle}">
+                    
+                <VerticalStackLayout>
+                    <Label Text="{Binding TempClass.Restaurant.Name}" FontSize="20" FontAttributes="Bold" Style="{DynamicResource labelStyle}"/>
+
+                    <HorizontalStackLayout Spacing="5">
+                        <Image Style="{DynamicResource detailPinsStyle}" WidthRequest="40" />
+                        <Label Text="{Binding TempClass.FullAdress}" VerticalOptions="Center" FontAttributes="Bold" Style="{DynamicResource labelStyle}"/>
+
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="5">
+                        <Image Style="{DynamicResource timeStyle}" WidthRequest="30" Margin="5"/>
+                        <Label Text="{Binding TempClass.Restaurant.OpeningTimes}" LineBreakMode="WordWrap" FontSize="15" WidthRequest="270" Style="{DynamicResource labelStyle}"/>
+                    </HorizontalStackLayout>
+
+
+                    <HorizontalStackLayout Spacing="5">
+                        <Image Style="{DynamicResource wordStyle}" WidthRequest="30" Margin="5"/>
+                        <Label Text="www.example.pl" VerticalOptions="Center" Style="{DynamicResource labelStyle}"/>
+                    </HorizontalStackLayout>
+
+
+                    <BoxView Margin="10" WidthRequest="365" HeightRequest="2" BackgroundColor="Grey" VerticalOptions="Center"/>
+
+                    <VerticalStackLayout Spacing="10">
+                        <DatePicker MinimumDate="{x:Static sys:DateTime.Now}" Date="{Binding Date}"/>
+                        <HorizontalStackLayout>
+                            <TimePicker WidthRequest="185" Time="{Binding Time}"/>
+                            <Picker  WidthRequest="187" ItemsSource="{Binding NumberOfPersons}" SelectedIndex="{Binding Index}"/>
+                        </HorizontalStackLayout>
+                        <Label Text="{Binding TempClass.AdressRestaurant.defaultTimeReservation, StringFormat='Czas twania rezerwacji {0}'}" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <HorizontalStackLayout Spacing="30" Margin="20,20,0,0">
+                        <Button Text="zmień" WidthRequest="150" TextTransform="Uppercase" Style="{DynamicResource buttonStyle}" Command="{Binding UpdateReservationCommand}"/>
+                        <Button Text="odwołaj" WidthRequest="150" TextTransform="Uppercase" Style="{DynamicResource buttonStyle}" Command="{Binding RemoveReservationCommand}"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

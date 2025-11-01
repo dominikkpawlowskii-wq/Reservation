@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mapsui="clr-namespace:Mapsui.UI.Maui;assembly=Mapsui.UI.Maui"
+             xmlns:modelView="clr-namespace:Reservations.modelViews"
+             x:Class="Reservations.Page.MapPage"
+             x:DataType="modelView:MapViewModel"
+             Title="NewPage2"
+             Style="{DynamicResource navBarBackgroundColorStyle}"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="*,auto">
+        <ContentView Content="{Binding MapView}" Grid.RowSpan="2"/>
+        <Border VerticalOptions="Center" StrokeShape="10"  HeightRequest="150" WidthRequest="370" Margin="0,480,0,0" IsVisible="{Binding IsActive}" Style="{DynamicResource detailBorderStyle}">
+            <Grid ColumnDefinitions="auto, *" RowDefinitions="*,30">
+                <Image Grid.Column="0" WidthRequest="140" Source="{Binding Restaurant.IconImage}" Aspect="Fill" Grid.Row="0"/>
+                <VerticalStackLayout Grid.Column="1" Margin="10" Spacing="10" Grid.Row="0">
+                    <Label Text="{Binding Restaurant.Name}" FontAttributes="Bold" FontSize="20" Style="{DynamicResource labelStyle}" IsVisible="true"/>
+                    <Label Text="{Binding Restaurant.Desciption}" Style="{DynamicResource labelStyle}" LineBreakMode="TailTruncation" IsVisible="true"/>
+                    <BoxView HeightRequest="1" Style="{DynamicResource boxViewStyle}"/>
+                </VerticalStackLayout>
+                <Label Text="Nawiguj do restauracji" Grid.Row="1" Grid.ColumnSpan="2" Style="{DynamicResource labelStyle}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="Grey"/>
+            </Grid>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type modelView:MapViewModel}},Path=GoToRestaurantDetailPageCommand}" CommandParameter="{Binding .}"/>
+            </Border.GestureRecognizers>
+        </Border>
+    </Grid>
+</ContentPage>

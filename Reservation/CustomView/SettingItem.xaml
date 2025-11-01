@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:item="clr-namespace:Reservations.CustomView"
+             x:Class="Reservations.CustomView.SettingItem"
+             x:DataType="item:SettingItem"
+             x:Name="root">
+
+
+    <Grid ColumnDefinitions="60, *, auto" >
+        <Border StrokeThickness="0"  Style="{DynamicResource borderAppThemeStyle}">
+            <Image Source="switch_icon.png" HeightRequest="30"/>
+        </Border>
+        <Label  Grid.Column="1" FontSize="20" Text="{Binding Text,Source={x:Reference root}}" VerticalOptions="Center" Margin="15,0,0,0" Style="{DynamicResource labelStyle}"/>
+        <Switch Grid.Column="2" IsToggled="{Binding IsToggled, Source={x:Reference root}}" Style="{StaticResource switchStyle}"/>
+    </Grid>
+</ContentView>

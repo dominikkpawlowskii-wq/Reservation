@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reservations.Page.RegisterPage"
+             xmlns:model="clr-namespace:Reservations.modelViews"
+             x:DataType="model:RegisterViewModel"
+             Title=""
+             Style="{DynamicResource navBarBackgroundColorStyle}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding GoToBackPageCommand}"/>
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Zaloguj się" Command="{Binding GoToLoginPageCommand}"/>
+    </ContentPage.ToolbarItems>
+    
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <Label Text="Rejestracja" HorizontalOptions="Center" FontSize="30" FontAttributes="Bold" Style="{DynamicResource labelStyle}"/>
+        <Entry Placeholder="Imie" Text="{Binding Name}" ClearButtonVisibility="WhileEditing" Style="{DynamicResource entryColorTextStyle}"/>
+        <Entry Placeholder="Nazwisko" Text="{Binding LastName}" ClearButtonVisibility="WhileEditing" Style="{DynamicResource entryColorTextStyle}"/>
+        <Entry Placeholder="email" Text="{Binding Email}" Keyboard="Email" ClearButtonVisibility="WhileEditing" Style="{DynamicResource entryColorTextStyle}"/>
+        <Label Text="Prosze wpisz poprawny adres email"  TextColor="Red" IsVisible="{Binding InvalidEmail}"/>
+        <Entry Placeholder="Hasło" Text="{Binding Password}" IsPassword="True" ClearButtonVisibility="WhileEditing" Style="{DynamicResource entryColorTextStyle}"/>
+        <Label Text="{Binding TextMeter}" HorizontalOptions="Center" IsVisible="{Binding MetterPassword}" TextColor="{Binding Color}"/>
+        <Entry Placeholder="Telefon" Text="{Binding Telephone}" Keyboard="Numeric" MaxLength="9" ClearButtonVisibility="WhileEditing" Style="{DynamicResource entryColorTextStyle}"/>
+        <Button Style="{DynamicResource buttonStyle}" Text="Rejestracja" CornerRadius="50" Command="{Binding RegisterAccountCommand}" IsVisible="{Binding IsNotBusy}" IsEnabled="{Binding IsActive}"/>
+        <ActivityIndicator VerticalOptions="Center" HorizontalOptions="Center" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
+        
+    </VerticalStackLayout>
+
+</ContentPage>

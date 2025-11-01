@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reservations.Page.MyPopup"
+             xmlns:viewModel="clr-namespace:Reservations.modelViews"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewModel:PopupViewModel"
+             HeightRequest="830"
+             WidthRequest="440"
+             BackgroundColor="Transparent">
+
+    <Border StrokeShape="20" Style="{DynamicResource detailBorderStyle}">
+        <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto">
+            
+            <Grid Grid.Row="0" ColumnDefinitions="*,*" RowDefinitions="auto,auto" Padding="15,10,5,5">
+                <Label Text="Moje dane" FontAttributes="Bold" Grid.Column="0" VerticalOptions="Center" Style="{DynamicResource labelStyle}"/>
+                <Button Style="{DynamicResource closeButtonStyle}" WidthRequest="40" Grid.Column="1" HorizontalOptions="End" BackgroundColor="Transparent" Command="{Binding GoToSettingPageCommand}" />
+            </Grid>
+            <BoxView Style="{DynamicResource boxViewStyle}" Grid.Row="1"/>
+
+            <Grid Grid.Row="2" RowDefinitions="*,*,*" Padding="15,30,15,15" ColumnDefinitions="auto,auto" ColumnSpacing="5">
+                <Label Text="Imie i Nazwisko" Grid.ColumnSpan="2" Style="{DynamicResource labelStyle}"/>
+                <Label Grid.Row="1" Text="{Binding UserService.Account.FirstName}" Style="{DynamicResource labelStyle}"/>
+                <Label Grid.Row="1" Text="{Binding UserService.Account.LastName}" Grid.Column="1" Style="{DynamicResource labelStyle}"/>
+            </Grid>
+            <BoxView Style="{DynamicResource boxViewStyle}" Grid.Row="3" Margin="15,0,15,0"/>
+
+            <Grid RowDefinitions="*,*,*,*,*" Grid.Row="4" Padding="15,20,15,15">
+                <Label Text="Numer Telefonu" Style="{DynamicResource labelStyle}"/>
+                <Label Grid.Row="1" Text="{Binding UserService.Account.Telephone}" Style="{DynamicResource labelStyle}"/>
+                <Label Text="Adres Email" Grid.Row="2" Margin="0,10,0,0" Style="{DynamicResource labelStyle}"/>
+                <Label Grid.Row="3" Text="{Binding UserService.Account.Email}" Style="{DynamicResource labelStyle}"/>
+               
+            </Grid>
+            <BoxView Style="{DynamicResource boxViewStyle}" Grid.Row="5" Margin="15,0,15,0"/>
+            <Grid RowDefinitions="*,*" Grid.Row="6" ColumnDefinitions="50,100" Padding="15,20,15,15">
+                <Label Text="Dodatkowe dane" Grid.ColumnSpan="2" FontAttributes="Bold" FontSize="15" Style="{DynamicResource labelStyle}"/>
+                <Label Text="Punkty" Grid.Row="1" Margin="0,10,0,0" Style="{DynamicResource labelStyle}"/>
+                <Label Text="{Binding UserService.Account.NumberOfPoints}" Grid.Row="1" Grid.Column="1" Margin="0,10,0,0" Style="{DynamicResource labelStyle}"/>
+            </Grid>
+            <BoxView Grid.Row="7" Style="{DynamicResource boxViewStyle}" Margin="15,0,15,0"/>
+
+        </Grid>
+    </Border>
+</toolkit:Popup>

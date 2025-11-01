@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModel="clr-namespace:Reservations.modelViews"
+             xmlns:customView="clr-namespace:Reservations.CustomView"
+             x:Class="Reservations.Page.ProfilPage"
+             Title="Profil"
+             x:DataType="ViewModel:ProfilViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Style="{DynamicResource navBarBackgroundColorStyle}">
+
+
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,auto,auto" Padding="10">
+            <Label Text="{Binding Title}" VerticalOptions="Center" FontAttributes="Bold" FontSize="25" Style="{DynamicResource labelStyle}"/>
+            <Image Style="{DynamicResource walletStyle}" Grid.Column="1" HorizontalOptions="End"/>
+            <Label Text="{Binding UserService.Account.NumberOfPoints, StringFormat='{0} pkt'}" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="20" Style="{DynamicResource labelStyle}"/>
+        </Grid>
+    </Shell.TitleView>
+
+
+
+
+    <Grid RowDefinitions="auto, *, 2,auto">
+        <ScrollView Grid.Row="1" Orientation="Vertical" Padding="10">
+            <Grid RowSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+
+                <HorizontalStackLayout Grid.Row="0" Spacing="10" Margin="0,5,5,5" Grid.ColumnSpan="3">
+                    <toolkit:AvatarView ImageSource="user_icon.png" HeightRequest="100" WidthRequest="90" BorderWidth="0"/>
+                    <Label Text="{Binding UserService.Account.FirstName}" Style="{DynamicResource profilLabelsStyle}"/>
+                    <Label Text="{Binding UserService.Account.LastName}" Style="{DynamicResource profilLabelsStyle}"/>
+                </HorizontalStackLayout>
+
+                <customView:MenuItem Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    Icon="setting_icon.png"
+                    Text="Ustawienia"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModel:ProfilViewModel}}, Path=GoToSettingPageCommand}"/>
+
+                <BoxView Grid.Row="2" Style="{DynamicResource boxViewStyle}" Grid.ColumnSpan="3"/>
+
+                <customView:MenuItem Grid.Row="3"
+                                     Grid.ColumnSpan="3"
+                                     Icon="data_account_icon.png"
+                                     Text="Moje dane"
+                                     Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModel:ProfilViewModel}}, Path=GoToMyDataPageCommand}"/>   
+
+                <BoxView Grid.Row="4"  Style="{DynamicResource boxViewStyle}" Grid.ColumnSpan="3"/>
+
+                <customView:MenuItem Grid.Row="5"
+                                     Grid.ColumnSpan="3"
+                                     Icon="about_icon.png"
+                                     Text="O aplikacji"
+                                     Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModel:ProfilViewModel}}, Path=GoToAboutPageCommand}"/>
+
+                <BoxView Grid.Row="6"  Style="{DynamicResource boxViewStyle}" Grid.ColumnSpan="3"/>
+
+
+
+            </Grid>
+
+        </ScrollView>
+        <BoxView Style="{DynamicResource boxViewStyle}" HeightRequest="2" Grid.Row="2" VerticalOptions="End" Grid.ColumnSpan="3"/>
+        <Button  Margin="10" VerticalOptions="End" Grid.Row="3" Text="Wyloguj się" CornerRadius="50" Grid.ColumnSpan="3" BorderWidth="2" Command="{Binding LoginOutCommand}" Style="{DynamicResource buttonStyle}" FontAttributes="Bold"/>
+    </Grid>
+    
+</ContentPage>

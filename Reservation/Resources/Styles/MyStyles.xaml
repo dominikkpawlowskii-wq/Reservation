@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="reservations.Resources.Styles.MyStyles">
+
+    <Style x:Key="borderAppThemeStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{DynamicResource borderImageColor}"/>
+        <Setter Property="WidthRequest" Value="50"/>
+        <Setter Property="StrokeShape" Value="10"/>
+    </Style>
+    
+    <Style x:Key="navBarBackgroundColorStyle" TargetType="ContentPage">
+        <Setter Property="Shell.TitleColor" Value="{DynamicResource textColor}"/>
+        <Setter Property="Shell.ForegroundColor" Value="{DynamicResource backButtonColor}"/>
+        <Setter Property="Shell.BackgroundColor" Value="{DynamicResource navigationBarColor}"/>
+        <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}"/>
+    </Style>
+    
+    <Style x:Key="boxViewStyle" TargetType="BoxView">
+        <Setter Property="BackgroundColor" Value="{DynamicResource boxViewBackgroundColor}"/>
+        <Setter Property="HeightRequest" Value="2"/>
+    </Style>
+    
+    <Style x:Key="labelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="{DynamicResource textColor}"/>
+    </Style>
+    
+    <Style x:Key="buttonStyle" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{DynamicResource buttonBackgroundColor}"/>
+        <Setter Property="TextColor" Value="{DynamicResource textColor}"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Style.Triggers>
+            <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                <Setter Property="BackgroundColor" Value="#dcdce4"/>
+                <Setter Property="TextColor" Value="black"/>
+            </Trigger>
+            <Trigger TargetType="Button" Property="IsEnabled" Value="true">
+                <Setter Property="BackgroundColor" Value="{DynamicResource buttonBackgroundColor}"/>
+                <Setter Property="TextColor" Value="{DynamicResource textColor}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="profilLabelsStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="23"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextColor" Value="{DynamicResource textColor}"/>
+    </Style>
+    
+    <Style x:Key="detailBorderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{DynamicResource detailPageBorderBackgroundColor}"/>
+    </Style>
+
+    <Style x:Key="borderTitlePageStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{DynamicResource buttonBackgroundColor}"/>
+        <Setter Property="HeightRequest" Value="150"/>
+    </Style>
+    
+    <Style x:Key="entryColorTextStyle" TargetType="Entry">
+        <Setter Property="TextColor" Value="{DynamicResource textColor}"/>
+    </Style>
+
+    <Style x:Key="DateTextColorStyle" TargetType="DatePicker">
+        <Setter Property="TextColor" Value="{DynamicResource textColor}"/>
+    </Style>
+    
+    <Style x:Key="pickerTextColorStyle" TargetType="Picker">
+        <Setter Property="TextColor" Value="{DynamicResource textColor}"/>
+    </Style>
+
+    <Style x:Key="TimeTextColorStyle" TargetType="TimePicker">
+        <Setter Property="TextColor" Value="{DynamicResource textColor}"/>
+    </Style>
+
+    <Style x:Key="switchStyle" TargetType="Switch">
+        <Setter Property="OnColor" Value="#0f2b39"/>
+        <Setter Property="ThumbColor" Value="Blue"/>
+        <Style.Triggers>
+            <Trigger TargetType="Switch" Property="IsToggled" Value="false">
+                <Setter Property="ThumbColor" Value="#0f2b39"/>
+            </Trigger>
+            <Trigger TargetType="Switch" Property="IsToggled" Value="true">
+                <Setter Property="ThumbColor" Value="Blue"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+
+
+</ResourceDictionary>
