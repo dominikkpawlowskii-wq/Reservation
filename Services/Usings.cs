@@ -1,0 +1,17 @@
+﻿global using Interfaces;
+global using Models.Classes;
+global using CommunityToolkit.Mvvm.ComponentModel;
+global using PaypalServerSdk.Standard.Http.Response;
+global using PaypalServerSdk.Standard.Models;
+global using System.Net.Http.Json;
+global using EntitySQLite;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.IdentityModel.Tokens;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using System.Text;
+global using PaypalServerSdk.Standard;
+global using PaypalServerSdk.Standard.Authentication;
+global using PaypalServerSdk.Standard.Controllers;
+global using Microsoft.Extensions.Logging;
+global using System.Globalization;

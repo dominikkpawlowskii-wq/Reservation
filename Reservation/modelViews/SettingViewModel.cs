@@ -17,7 +17,6 @@ namespace Reservations.modelViews
             Preferences.Set(nameof(IsToggled), value);
 
             ApplyTheme();
-           
         }
 
         public void ApplyTheme()

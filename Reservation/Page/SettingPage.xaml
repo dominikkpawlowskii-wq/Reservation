@@ -9,7 +9,6 @@
              Shell.TabBarIsVisible="False"
              Style="{DynamicResource navBarBackgroundColorStyle}">
 
-
     <ScrollView Padding="10">
         <Grid RowDefinitions="auto, auto " RowSpacing="10">
             <customView:SettingItem Grid.Row="0"

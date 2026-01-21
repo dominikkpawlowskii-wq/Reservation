@@ -1,15 +1,10 @@
-﻿
-using Services;
-
-namespace Reservations.modelViews
+﻿namespace Reservations.modelViews
 {
     public partial class TitleViewModel : BaseViewModel
     {
-        public ConnectivityCheckerService ConnectivityCheckerService { get; set; }
-        public TitleViewModel(ConnectivityCheckerService connectivityCheckerService)
+        public TitleViewModel()
         {
             Title = "";
-            ConnectivityCheckerService = connectivityCheckerService;
         }
 
         [RelayCommand]

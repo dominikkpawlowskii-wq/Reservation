@@ -1,8 +1,4 @@
-﻿
-
-using System.Diagnostics.CodeAnalysis;
-
-namespace Reservations.modelViews
+﻿namespace Reservations.modelViews
 {
     public partial class ReservationViewModel : BaseViewModel, IQueryAttributable
     {
@@ -17,10 +13,9 @@ namespace Reservations.modelViews
         [ObservableProperty]
         public partial string? NumberPersons { get; set; }
         public List<string>? NumberOfPersons { get; set; }
+        public IReservationHttpClient ReservationService { get; set; }
 
-        private readonly IReservationRepository _reservationRepozitory;
-
-        public ReservationViewModel(IReservationRepository reservationRepozitory)
+        public ReservationViewModel(IReservationHttpClient reservationService)
         {
             RefreshTime();
             Index = Preferences.Get("int", 0);
@@ -29,7 +24,7 @@ namespace Reservations.modelViews
             Title = "Rezerwacja";
             NumberOfPersons = [];
             AddNumberOfPersons();
-            _reservationRepozitory = reservationRepozitory;
+            ReservationService = reservationService;
         }
 
 
@@ -76,7 +71,13 @@ namespace Reservations.modelViews
 
                 string? substring = NumberPersons?.Substring(0, 1);
 
-                TempClass.TableRestaurants = await _reservationRepozitory.GetTableRestaurantWithNumberOfPlaceArgument(Convert.ToInt16(substring), TempClass!.Restaurant!.Id);
+                TempObject tempObject = new TempObject
+                {
+                    IdTable = TempClass.AdressRestaurant!.Id,
+                    NumberOfSides = Convert.ToInt16(substring)
+                };
+
+                TempClass.TableRestaurants = await ReservationService.GetTableRestaurant(tempObject);
 
                 await Shell.Current.GoToAsync(nameof(SummaryReservationPage), true, new Dictionary<string, object>
                 {

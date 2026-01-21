@@ -15,9 +15,7 @@ namespace Reservations.modelViews
         [ObservableProperty]
         public partial DateTime Date {  get; set; }
         public List<string> NumberOfPersons { get; set; }
-
-        private readonly IReservationRepository _reservationRepository;
-        public MyReservationDetailViewModel(IReservationRepository reservationRepository)
+        public MyReservationDetailViewModel()
         {
             Date = DateTime.Now;
             TimeOnly timeOnly = TimeOnly.FromDateTime(Date);
@@ -26,7 +24,6 @@ namespace Reservations.modelViews
             Title = "Szczegóły rezerwacji";
             NumberOfPersons = [];
             AddNumberOfPersons();
-            _reservationRepository = reservationRepository;
         }
 
 
@@ -58,13 +55,13 @@ namespace Reservations.modelViews
         [RelayCommand]
         private async Task RemoveReservation()
         {
-            bool answer = await Shell.Current.DisplayAlert("Potwierdzenie", "Na pewno chcesz anulować rezerwacje?", "TAK", "NIE");
+            bool answer = await Shell.Current.DisplayAlertAsync("Potwierdzenie", "Na pewno chcesz anulować rezerwacje?", "TAK", "NIE");
             if (!answer)
             {
                 return;
             }
             
-                await _reservationRepository.RemoveReservation(TempClass!.Account!, TempClass!.Reservation!);
+                //await _reservationRepository.RemoveReservation(TempClass!.Account!, TempClass!.Reservation!);
                 await Shell.Current.GoToAsync("..", true);
 
             
@@ -72,14 +69,14 @@ namespace Reservations.modelViews
         [RelayCommand]
         private async Task UpdateReservation()
         {
-            bool answer = await Shell.Current.DisplayAlert("Potwierdzenie", "Na pewno chcesz zmienic godzine lub czas rezerwacji?", "TAK", "NIE");
+            bool answer = await Shell.Current.DisplayAlertAsync("Potwierdzenie", "Na pewno chcesz zmienic godzine lub czas rezerwacji?", "TAK", "NIE");
 
             if(!answer)
             {
                 return;
             }
             Index++;
-            await _reservationRepository.UpdateAccountReservation(TempClass!, Date, Time, Index);
+            //await _reservationRepository.UpdateAccountReservation(TempClass!, Date, Time, Index);
             await Shell.Current.GoToAsync("..", true);
         }
 

@@ -4,14 +4,13 @@ namespace Reservations.modelViews
 {
     public partial class MyDataViewModel : BaseViewModel
     {
-        [ObservableProperty]
-        public partial IUserService UserService {  get; set; }
+        public ILoginService UserService { get; set; }
         private readonly IPopupService _popupService;
-        public MyDataViewModel(IPopupService popupService, IUserService userService)
+        public MyDataViewModel(IPopupService popupService, ILoginService userService)
         {
-            UserService = userService;
             _popupService = popupService;
             _ = DisplayPopup();
+            UserService = userService;
         }
 
         public async Task DisplayPopup()

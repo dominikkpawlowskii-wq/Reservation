@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reservations.Page.ReservationsMyAccountPage"
              x:Name="ThisPage"
-             xmlns:model="clr-namespace:Model.Classes;assembly=Model"
+             xmlns:model="clr-namespace:Models.Classes;assembly=Models"
              xmlns:viewModel="clr-namespace:Reservations.modelViews"
              x:DataType="viewModel:ReservationsMyAccoutViewModel"
              Style="{DynamicResource navBarBackgroundColorStyle}">
@@ -23,8 +23,8 @@
                         <Image Source="{Binding RestaurantImage.Image}" Aspect="Fill" Grid.ColumnSpan="2"/>
                         <Label Text="{Binding Restaurant.Name}" Grid.Row="1" Margin="10" FontSize="20" FontAttributes="Bold"/>
                         <BoxView HeightRequest="2" BackgroundColor="Black" Grid.Row="2" Grid.ColumnSpan="2"/>
-                        <Label Text="{Binding Reservation.dateReservation}" Grid.Row="3" HorizontalOptions="Center" Grid.ColumnSpan="2"/>
-                        <Label Text="{Binding Reservation.hourStartReservations}" Grid.Row="4" HorizontalOptions="Center"/>
+                        <Label Text="{Binding Reservation.DateReservation}" Grid.Row="3" HorizontalOptions="Center" Grid.ColumnSpan="2"/>
+                        <Label Text="{Binding Reservation.HourStartReservation}" Grid.Row="4" HorizontalOptions="Center"/>
                         <Label Text="{Binding TableRestaurants.NumberPlace, StringFormat='{0} os.'}" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center"/>
                         <Button Text="szczegóły" Grid.Row="5" Grid.ColumnSpan="2" WidthRequest="240" Margin="0,10,0,20" TextTransform="Uppercase" Command="{Binding x:DataType='viewModel:ReservationsMyAccoutViewModel',Source={RelativeSource AncestorType={x:Type viewModel:ReservationsMyAccoutViewModel}}, Path=GoToMyReservationDetailPageCommand}" CommandParameter="{Binding .}"/> 
                     </Grid>

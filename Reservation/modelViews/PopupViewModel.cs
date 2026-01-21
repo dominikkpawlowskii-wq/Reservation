@@ -1,19 +1,13 @@
-﻿
-
-using CommunityToolkit.Maui.Core;
-
-namespace Reservations.modelViews
+﻿namespace Reservations.modelViews
 {
     public partial class PopupViewModel : BaseViewModel
     {
-        [ObservableProperty]
-        public partial IUserService UserService {  get; set; }
-
+        public ILoginService UserService { get; set; }
         private readonly IPopupService? _popupService;
-        public PopupViewModel(IPopupService popupService, IUserService userService)
+        public PopupViewModel(IPopupService popupService, ILoginService userService)
         {
             this._popupService = popupService;
-            this.UserService = userService;
+            UserService = userService;
         }
 
         [RelayCommand]

@@ -15,44 +15,17 @@ namespace Reservations.modelViews
         public partial int PktForReservation {  get; set; }
         [ObservableProperty]
         public partial int SumAllPkt {  get; set; }
-
-        [ObservableProperty]
-        public partial TempDataClass? TempDataClass {  get; set; }
         private readonly IPopupService _popupService;
-        private readonly IReservationRepository reservationRepozitory;
-        private readonly PaypalApi paypalApi;
-        public SummaryViewModel(IPopupService popup, TempDataClass tempDataClass, IReservationRepository reservationRepozitory, PaypalApi paypalApi)
+        public IReservationHttpClient? ReservationHttpClient { get; set; }
+        public INavigationDataService NavigationDataService { get; set; }
+        public SummaryViewModel(IPopupService popup, IReservationHttpClient reservationService,
+            INavigationDataService navigationDataService)
         {
             Title = "Podsumowanie";
             _popupService = popup;
-            TempDataClass = tempDataClass;
-            TempDataClass.Text = "Wybierz metode płatności";
-            this.reservationRepozitory = reservationRepozitory;
-            this.paypalApi = paypalApi;
+            ReservationHttpClient = reservationService;
+            NavigationDataService = navigationDataService;
         }
-
-        /*[RelayCommand]
-        private async Task DisplayPaymentMethodPopup()
-        {
-            if(IsBusy)
-                return;
-
-            try
-            {
-                IsBusy = true;
-                await Task.Delay(2000);
-                
-                //await _popupService.ShowPopupAsync<PaymentMethodViewModel>(she);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }*/
 
         [RelayCommand]
         private async Task InvokePayment()
@@ -69,23 +42,22 @@ namespace Reservations.modelViews
                 Reservation reservation = new()
                 {
                     IdAccount = TempClass!.Account!.Id,
-                    IdtableRestaurant = TempClass!.TableRestaurants!.Id,
-                    dateReservation = TempClass.Date.ToString(),
-                    hourStartReservations = TempClass.Time.ToString(),
-                    hourEndReservations = TempClass?.AdressRestaurant?.defaultTimeReservation.ToString(),
-                    prize = TempClass!.TableRestaurants.FeeForTable
+                    IdRestaurantTable = TempClass!.TableRestaurants!.Id,
+                    DateReservation = TempClass.Date.ToString(),
+                    HourStartReservation = TempClass.Time.ToString(),
+                    HourEndReservation = TempClass?.AdressRestaurant?.DefaultTimeReservation.ToString(),
+                    Price = TempClass!.TableRestaurants.FeeForTable
                 };
 
-                await Task.Run(async () => await paypalApi.ReadLinesInJsonFile("appSettings.json"));
-                    paypalApi.ConfigurePaypalApi();
+                    ApiResponse<Order> result = await ReservationHttpClient!.CreateOrder(reservation);
 
-                    ApiResponse<Order> result = await paypalApi.CreateOrder();
                     if (result.StatusCode == 200 && result.Data.Status == OrderStatus.PayerActionRequired)
                     {
                         var uri = result.Data.Links.SingleOrDefault(link => link.Rel == "payer-action")?.Href;
-                        reservationRepozitory.PutArgument(TempClass.Account,reservation, SumAllPkt, result.Data.Id);
-                        await Launcher.OpenAsync(uri!);
-                        
+
+                        NavigationDataService.SetData(result.Data.Id, SumAllPkt, reservation);
+
+                        await Launcher.OpenAsync(uri!);    
                     }
             }
             catch(Exception ex)
@@ -100,11 +72,11 @@ namespace Reservations.modelViews
 
         public void SetNumberOfPoints()
         {
-            if(TempClass?.TableRestaurants?.FeeForTable > 15.00 && TempClass.TableRestaurants.FeeForTable < 25.00)
+            if(TempClass?.TableRestaurants?.FeeForTable > 15.00m && TempClass.TableRestaurants.FeeForTable < 25.00m)
             {
                 PktForReservation = 100;
             }
-            else if(TempClass?.TableRestaurants?.FeeForTable > 25.00)
+            else if(TempClass?.TableRestaurants?.FeeForTable > 25.00m)
             {
                 PktForReservation = 200;
             }

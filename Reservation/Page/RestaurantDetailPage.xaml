@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reservations.Page.RestaurantDetailPage"
              xmlns:viewModel="clr-namespace:Reservations.modelViews"
-             xmlns:model="clr-namespace:Model.Classes;assembly=Model"
+             xmlns:model="clr-namespace:Models.Classes;assembly=Models"
              x:DataType="viewModel:RestaurantDetailViewModel"
              Style="{DynamicResource navBarBackgroundColorStyle}">
 
@@ -50,7 +50,7 @@
                     <BoxView WidthRequest="300" HeightRequest="2" BackgroundColor="Grey" Margin="10,10,0,0" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
 
-                <Label Text="{Binding TempClass.Restaurant.Desciption}" HorizontalTextAlignment="Justify" Margin="0,10,0,0" Style="{DynamicResource labelStyle}"/>
+                <Label Text="{Binding TempClass.Restaurant.Description}" HorizontalTextAlignment="Justify" Margin="0,10,0,0" Style="{DynamicResource labelStyle}"/>
 
                 <Button Text="Zarezerwuj" Margin="10" Style="{DynamicResource buttonStyle}" Command="{Binding GoToReservationPageCommand}"/>
             </VerticalStackLayout>

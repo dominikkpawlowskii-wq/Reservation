@@ -15,7 +15,7 @@
                 <Image Grid.Column="0" WidthRequest="140" Source="{Binding Restaurant.IconImage}" Aspect="Fill" Grid.Row="0"/>
                 <VerticalStackLayout Grid.Column="1" Margin="10" Spacing="10" Grid.Row="0">
                     <Label Text="{Binding Restaurant.Name}" FontAttributes="Bold" FontSize="20" Style="{DynamicResource labelStyle}" IsVisible="true"/>
-                    <Label Text="{Binding Restaurant.Desciption}" Style="{DynamicResource labelStyle}" LineBreakMode="TailTruncation" IsVisible="true"/>
+                    <Label Text="{Binding Restaurant.Description}" Style="{DynamicResource labelStyle}" LineBreakMode="TailTruncation" IsVisible="true"/>
                     <BoxView HeightRequest="1" Style="{DynamicResource boxViewStyle}"/>
                 </VerticalStackLayout>
                 <Label Text="Nawiguj do restauracji" Grid.Row="1" Grid.ColumnSpan="2" Style="{DynamicResource labelStyle}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="Grey"/>

@@ -1,22 +1,18 @@
-﻿
-
-namespace Reservations.modelViews
+﻿namespace Reservations.modelViews
 {
     public partial class ProfilViewModel : BaseViewModel
     {
-        [ObservableProperty]
-        public partial IUserService UserService { get; set; }
-        public ProfilViewModel(IUserService userService)
+        public ILoginService UserService { get; set; }
+        public ProfilViewModel(ILoginService userService)
         {
             Title = "Profil";
-            this.UserService = userService;
-            
+            UserService = userService;
         }
 
         [RelayCommand]
         private async Task LoginOut()
         {
-            UserService.LogoutAccount();
+            UserService.Logout();
             await Shell.Current.GoToAsync($"//{nameof(TitlePage)}", true);
         }
 
@@ -33,10 +29,7 @@ namespace Reservations.modelViews
         [RelayCommand]
         private async Task GoToMyDataPage()
         {
-            await Shell.Current.GoToAsync(nameof(MyDataPage), true, new Dictionary<string, object>
-            {
-                {"Account",UserService !.Account ! }
-            });
+            await Shell.Current.GoToAsync(nameof(MyDataPage), true);
         }
 
     }

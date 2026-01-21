@@ -1,15 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Model.Classes;
-namespace EntitySQLite
+﻿namespace EntitySQLite
 {
     public partial class ReservationsContext : DbContext
     {
-        public DbSet<RestaurantImage> restaurantImages { get; set; }
-        public DbSet<Restaurant> restaurants {  get; set; }
-        public DbSet<AdressRestaurant> adressRestaurant { get; set; }
-        public DbSet<TableRestaurants> tableRestaurants { get; set; }
-        public DbSet<Reservation> reservation { get; set; }
-        public DbSet<Account> accounts { get; set; }
+        public DbSet<RestaurantImage> RestaurantImages { get; set; }
+        public DbSet<Restaurant> Restaurants {  get; set; }
+        public DbSet<RestaurantAddress> RestaurantAddresses { get; set; }
+        public DbSet<RestaurantTable> RestaurantTables { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<AccountRefreshToken> AccountRefreshTokens { get; set; }
 
         public ReservationsContext(DbContextOptions option)
             : base(option)

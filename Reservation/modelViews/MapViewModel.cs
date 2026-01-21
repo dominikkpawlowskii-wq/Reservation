@@ -6,31 +6,31 @@ namespace Reservations.modelViews
 {
     public partial class MapViewModel : BaseViewModel
     {
+        public INavigationDataService NavigationDataService { get; set; }
         private readonly IGeocoding _geocoding;
-        private readonly IRestaurantService _restaurantService;
 
-        private  ObservableRangeCollection<Restaurant>? _restaurants;
-        private  ObservableRangeCollection<AdressRestaurant>? _adresses;
-        private  ObservableRangeCollection<RestaurantImage>? restaurantImages;
+        public ObservableCollection<Restaurant>? Restaurants { get; set; }
+        public  ObservableCollection<RestaurantAddress>? Adresses { get; set; }
+        public  ObservableCollection<RestaurantImage>? RestaurantImages { get; set; }
 
         private readonly Dictionary<string, Location> _locationsCache = [];
         private readonly Dictionary<string, Placemark> _placemarksCache = [];
 
         [ObservableProperty]
-        public partial MapView MapView { get; set; } = [];
+        public partial MapView MapView { get; set; }
         [ObservableProperty]
         public partial bool IsVisible {  get; set; }
         [ObservableProperty]
         public partial Restaurant? Restaurant {  get; set; }
 
         private TempClass? TempClass;
-        public MapViewModel(IRestaurantService restaurantService, IGeocoding geocoding)
+        public MapViewModel(IGeocoding geocoding, INavigationDataService navigationDataService)
         {
            
             this._geocoding = geocoding;
-            this._restaurantService = restaurantService;
+            this.NavigationDataService = navigationDataService;
 
-            GetAllLists();
+            Reload();
 
             ConfigureMap();
         }
@@ -99,8 +99,8 @@ namespace Reservations.modelViews
                 MapView.Pins.Clear();
             }
 
-            var adressAndRestaurant = (from r in _restaurants
-                                      join a in _adresses
+            var adressAndRestaurant = (from r in Restaurants
+                                      join a in Adresses!
                                       on r.Id equals a.IdRestaurant
                                       select new TempClass
                                       {
@@ -109,7 +109,7 @@ namespace Reservations.modelViews
                                       }).ToList();
             foreach(var temp in adressAndRestaurant)
             {
-                string adresRestaurant = $"{temp.AdressRestaurant?.street} {temp.AdressRestaurant?.apartmentNumber} {temp.AdressRestaurant?.city}";
+                string adresRestaurant = $"{temp.AdressRestaurant?.Street} {temp.AdressRestaurant?.ApartmentNumber} {temp.AdressRestaurant?.City}";
                 Location location = await GetCachedlocationAsync(adresRestaurant);
                 if (location != null)
                 {
@@ -134,15 +134,15 @@ namespace Reservations.modelViews
 
         private void AssignRestaurantAndadresToVariables(Placemark placemark)
         {
-            var temp = (from r in _restaurants
-                        join a in _adresses on r.Id equals a.IdRestaurant
-                        join Ir in restaurantImages on r.Id equals Ir.Id 
-                        where a.street == placemark.Thoroughfare && a.apartmentNumber == Convert.ToInt16(placemark.SubThoroughfare) && a.city == placemark.Locality
+            var temp = (from r in Restaurants
+                        join a in Adresses! on r.Id equals a.IdRestaurant
+                        join Ir in RestaurantImages! on r.Id equals Ir.Id 
+                        where a.Street == placemark.Thoroughfare && a.ApartmentNumber == Convert.ToInt16(placemark.SubThoroughfare) && a.City == placemark.Locality
                         select new TempClass
                         {
                             Restaurant = r,
                             AdressRestaurant = a,
-                            ImagesRestaurant = [..(from Images in restaurantImages
+                            ImagesRestaurant = [..(from Images in RestaurantImages
                                                     where Images.IdRestaurant == r.Id
                                                     select Images)],
                         }).SingleOrDefault();
@@ -156,21 +156,16 @@ namespace Reservations.modelViews
 
         public void Reload()
         {
-            _restaurants = _restaurantService.GetRestaurantList();
-        }
-
-        public void GetAllLists()
-        {
-            (ObservableRangeCollection<Restaurant> ar, ObservableRangeCollection<AdressRestaurant> r, ObservableRangeCollection<RestaurantImage> rI) = _restaurantService.ReturnList();
-            _restaurants = ar;
-            _adresses = r;
-            restaurantImages = rI;
+            /*(ObservableCollection<Restaurant> reservations, ObservableCollection<AdressRestaurant> aR, ObservableCollection<RestaurantImage> rI)
+                = NavigationDataService.GetTupleCollections();
+            Restaurants = reservations;
+            Adresses = aR;
+            RestaurantImages = rI;*/
         }
 
         public void ConfigureMap()
         {
-            GetAllLists();
-
+            this.MapView = [];
             this.MapView.Map.Navigator.Limiter = new ViewportLimiterKeepWithinExtent();
             this.MapView.Map.Layers.Add(OpenStreetMap.CreateTileLayer($"myAgent"));
             this.MapView.Map.Layers.Remove(this.MapView.MyLocationLayer);

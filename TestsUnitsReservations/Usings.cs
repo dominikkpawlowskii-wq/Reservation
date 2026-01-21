@@ -1,0 +1,12 @@
+﻿global using EntitySQLite;
+global using Interfaces;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using Models.Classes;
+global using Moq;
+global using ServerLayer.Controllers;
+global using Services;
+global using System.Data.Common;
+global using Microsoft.Data.Sqlite;
+global using System.Net.Http.Headers;
+global using PaypalServerSdk.Standard.Models;

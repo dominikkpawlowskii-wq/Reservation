@@ -1,29 +1,25 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using Mapsui.Utilities;
-
-namespace Reservations.modelViews
+﻿namespace Reservations.modelViews
 {
     public partial class ReservationsMyAccoutViewModel : BaseViewModel
     {
-        [ObservableProperty]
-        public partial IUserService UserService {  get; set; }
-        private readonly IReservationRepository _reservationRepozitory;
+        public ILoginService? UserService {  get; set; }
+        public IReservationHttpClient ReservationService { get; set; }
         public ObservableCollection<TempClass> AccountReservations { get; set; }
-        public ReservationsMyAccoutViewModel(IReservationRepository reservationRepozitory, IUserService userService)
+        public ReservationsMyAccoutViewModel(IReservationHttpClient reservationService, ILoginService userService)
         {
             
             Title = "Moje rezerwacje";
             AccountReservations = [];
-            _reservationRepozitory = reservationRepozitory;
+            ReservationService = reservationService;
             UserService = userService;
 
         }
         public async Task AddReservationsToCollection()
         {
-            if (AccountReservations.Count() != 0)
+            if (AccountReservations.Count != 0)
                 AccountReservations.Clear();
 
-            var list = await _reservationRepozitory.GetListTempClass(UserService!.Account!);
+            var list = await ReservationService.GetAccountReservations(UserService!.GetAccount());
 
             foreach (var tempClass in list)
             {
@@ -33,9 +29,8 @@ namespace Reservations.modelViews
         [RelayCommand]
         public async Task GoToMyReservationDetailPage(TempClass tempClass)
         {
-            TimeOnly timeOnly = TimeOnly.Parse(tempClass!.Reservation!.hourStartReservations!);
+            TimeOnly timeOnly = TimeOnly.Parse(tempClass!.Reservation!.HourStartReservation!);
             tempClass.Timesp = timeOnly.ToTimeSpan();
-            tempClass.Account = UserService.Account;
             await Shell.Current.GoToAsync(nameof(MyReservationDetailPage), true, new Dictionary<string, object>
             {
                 {nameof(TempClass), tempClass},

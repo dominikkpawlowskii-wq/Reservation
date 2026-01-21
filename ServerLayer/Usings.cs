@@ -1,0 +1,12 @@
+﻿global using Microsoft.AspNetCore.Mvc;
+global using EntitySQLite;
+global using Microsoft.EntityFrameworkCore;
+global using Models.Classes;
+global using System.Text;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.AspNetCore.Authorization;
+global using Interfaces;
+global using Services;
+global using PaypalServerSdk.Standard.Http.Response;
+global using PaypalServerSdk.Standard.Models;

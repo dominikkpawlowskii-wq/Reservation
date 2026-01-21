@@ -12,8 +12,5 @@ public partial class MapPage : ContentPage
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-
-        ((MapViewModel)BindingContext).Reload();
-        await ((MapViewModel)BindingContext).AddPinOnMap();
     }
 }

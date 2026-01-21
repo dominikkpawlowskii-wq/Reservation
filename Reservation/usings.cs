@@ -1,6 +1,5 @@
 ﻿global using CommunityToolkit.Mvvm.ComponentModel;
 global using CommunityToolkit.Mvvm.Input;
-global using Model.Classes;
 global using Mapsui.UI.Maui;
 global using System.Collections.ObjectModel;
 global using Reservations.modelViews;
@@ -11,8 +10,9 @@ global using Microsoft.Extensions.Logging;
 global using SkiaSharp.Views.Maui.Controls.Hosting;
 global using System.Text.RegularExpressions;
 global using CommunityToolkit.Maui;
-global using Microsoft.Maui.Devices.Sensors;
 global using Interfaces;
 global using Reservations.themes;
 global using PaypalServerSdk.Standard.Http.Response;
 global using PaypalServerSdk.Standard.Models;
+global using Models.Classes;
+global using Services;

@@ -1,27 +1,25 @@
-﻿using Services;
+﻿using EntitySQLite;
+
 namespace Reservations.modelViews
 {
     public partial class LoginViewModel : BaseViewModel
     {
-        private readonly IReservationRepository _reservationRepozitory;
-
         [ObservableProperty]
         public partial string? Email { get; set; }
         [ObservableProperty]
         public partial string? Password { get; set; }
         [ObservableProperty]
         public partial bool InvalidEmail { get; set; }
-        [ObservableProperty]
-        public partial IUserService UserService { get; set; }
-        private readonly ConnectivityCheckerService _connectivityCheckerService;
-        public LoginViewModel(IReservationRepository reservationRepozitory,IUserService userService, ConnectivityCheckerService checkerService)
+
+        public IReservationHttpClient ReservationHttpClient { get; set; }
+        public IConnectivity Connectivity { get; set; }
+        public ILoginService UserService { get; set; }
+        public LoginViewModel(IConnectivity connectivity, IReservationHttpClient reservationService, ILoginService userService)
         {
             Title = "";
-            this._reservationRepozitory = reservationRepozitory;
-            this.UserService = userService;
-            this._connectivityCheckerService = checkerService;
-
-
+            Connectivity = connectivity;
+            ReservationHttpClient = reservationService;
+            UserService = userService;
         }
         [RelayCommand]
         private  async Task GoToRegisterPage()
@@ -55,49 +53,38 @@ namespace Reservations.modelViews
 
                 InvalidEmail = false;
 
-                if (_connectivityCheckerService.CheckNetworkEnabled() == NetworkAccess.Internet)
+                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
-                    var response = await _connectivityCheckerService.HttpClient.GetAsync("https://www.google.com");
-
-                    if (response.IsSuccessStatusCode)
+                    var authentication = new Authentication
                     {
-                        var Account = await _reservationRepozitory.GetAccount(Email!);
-  
-                        if (Account != null)
-                        {
-                            var passwordMatch = await Task.Run(() => BCrypt.Net.BCrypt.Verify(Password, Account.Password));
+                        Email = Email,
+                        Password = Password,
+                    };
 
-                            if (passwordMatch)
-                            {
-
-                                UserService.AddAccountToService(Account);
-                                await Task.Delay(1000);
-                                await Shell.Current.GoToAsync($"//mainApp/look", true);
-                            }
-                            else
-                            {
-                                await Shell.Current.DisplayAlert("Nie powiodło się", "Niepoprawny email lub hasło!", "ok");
-                            }
-
-
-                        }
-                        else
-                        {
-                            await Shell.Current.DisplayAlert("Nie powiodło się", "Niepoprawny email lub hasło!", "ok");
-                        }
+                    TempDataAccount dataAccount = await ReservationHttpClient.Login(authentication);
+                    
+                    if(dataAccount is not null)
+                    {
+                        await Task.Delay(1000);
+                        UserService.Login(dataAccount.Account!, dataAccount.Tokens!);
+                        await Shell.Current.GoToAsync($"//mainApp/search", true);
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlertAsync("Nie udało się", "Niepoprawny email lub hasło! spróbuj ponownie.", "Ok");
                     }
                 }
                 else
                 {
                     IsBusy = false;
-                    await Shell.Current.DisplayAlert("Brak internetu", "Brak połączenia z internetem! Włącz internet na urządzeniu.", "Ok");
+                    await Shell.Current.DisplayAlertAsync("Brak internetu", "Brak połączenia z internetem! Włącz internet na urządzeniu.", "Ok");
                     return;
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                await Shell.Current.DisplayAlert("nie udało się", $"{ex.Message}", "ok");
+                await Shell.Current.DisplayAlertAsync("nie udało się", $"{ex.Message}", "ok");
             }
             finally
             {

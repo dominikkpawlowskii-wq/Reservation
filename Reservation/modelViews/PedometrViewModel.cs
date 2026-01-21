@@ -15,12 +15,12 @@ namespace Reservations.modelViews
         public partial bool IsSwitch {  get; set; }
         [ObservableProperty]
         public partial int NumberOfStep {  get; set; }
-        [ObservableProperty]
-        public partial IUserService UserService { get; set; }
 
         private double lastMagnitude;
         private const double treshold = 0.8;
-        public PedometrViewModel(IUserService userService)
+
+        public ILoginService UserService { get; set; }
+        public PedometrViewModel(ILoginService userService)
         {
             Title = "Krokomierz";
             Date = DateTime.Now.ToString("ddd dd MMM", new CultureInfo("pl-PL"));

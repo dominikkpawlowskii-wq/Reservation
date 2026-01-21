@@ -10,10 +10,6 @@
     Shell.TabBarForegroundColor="Red"
     Shell.TabBarTitleColor="Red">
 
-
-
-
-
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:TitlePage}"
@@ -22,8 +18,8 @@
     <TabBar Route="mainApp">
         <ShellContent Title="Szukaj"
                       Icon="look_icon.png"
-                      ContentTemplate="{DataTemplate views:LookPage}"
-                      Route="look" />
+                      ContentTemplate="{DataTemplate views:SearchPage}"
+                      Route="search" />
 
         <ShellContent Title="Mapa"
                       Icon="map_icon.png"

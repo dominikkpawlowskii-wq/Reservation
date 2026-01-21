@@ -5,7 +5,6 @@ namespace Reservations.modelViews
 {
     public partial class RegisterViewModel : BaseViewModel
     {
-        private readonly IReservationRepository _reservationRepozitory;
         [ObservableProperty]
         public partial string? Name { get; set; }
         [ObservableProperty]
@@ -26,12 +25,14 @@ namespace Reservations.modelViews
         public partial Microsoft.Maui.Graphics.Color? Color { get; set; }
         [ObservableProperty]
         public partial bool MetterPassword { get; set; }
-        private readonly ConnectivityCheckerService _connectivityCheckerService;
+
+        public IConnectivity Connectivity { get; set; }
+        public IReservationHttpClient ReservationHttpClient { get; set; }
         
-        public RegisterViewModel(IReservationRepository reservationRepozitory, ConnectivityCheckerService connectivityChecker)
+        public RegisterViewModel(IConnectivity connectivity, IReservationHttpClient reservationService)
         {
-            this._reservationRepozitory = reservationRepozitory;
-            this._connectivityCheckerService = connectivityChecker;
+            this.Connectivity = connectivity;
+            this.ReservationHttpClient = reservationService;
         }
 
 
@@ -67,54 +68,54 @@ namespace Reservations.modelViews
                 
                 InvalidEmail = false;
 
-                if(_connectivityCheckerService.CheckNetworkEnabled() == NetworkAccess.Internet)
+                if(Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
-                    var Account = await _reservationRepozitory.GetAccount(Email!);
-                    if (Account != null)
+                    bool returnSuccess = false;
+
+                    var Account = new Account
                     {
-                        var passwordMath = await Task.Run(() => BCrypt.Net.BCrypt.Verify(Password, Account.Password));
-                        if (passwordMath)
-                            await Shell.Current.DisplayAlert("istnieje konto", "konto o takich danych istnieje!", "ok");
+                        FirstName = Name,
+                        LastName = LastName,
+                        Email = Email,
+                        Password = Password,
+                        Telephone = Telephone
+                    };
 
-                        return;
-
+                    if (Account.FirstName == "admin")
+                    {
+                        Account.NumberOfPoints = null;
                     }
                     else
                     {
-                        Account = new Account
-                        {
-                            FirstName = Name,
-                            LastName = LastName,
-                            Email = Email,
-                            Password = await Task.Run(() => BCrypt.Net.BCrypt.HashPassword(Password)),
-                            Telephone = Telephone
-                        };
+                        Account.NumberOfPoints = 1000;
+                    }
 
-                        if (Account.FirstName == "admin")
-                        {
-                            Account.NumberOfPoints = null;
-                        }
-                        else
-                        {
-                            Account.NumberOfPoints = 1000;
-                        }
-                        await _reservationRepozitory.AddAccount(Account);
-                        await Shell.Current.DisplayAlert("Rejestracja udana", "konto zostało zarejestrowane! kliknij ok by zalogować się!", "ok");
+                    returnSuccess = await ReservationHttpClient.Register(Account);
+
+                    if(returnSuccess)
+                    {
+                        await Shell.Current.DisplayAlertAsync("Rejestracja udana", "konto zostało zarejestrowane! kliknij ok by zalogować się!", "ok");
 
                         await Shell.Current.GoToAsync(nameof(LoginPage));
                     }
+                    else
+                    {
+                        await Shell.Current.DisplayAlertAsync("Niepowodzenie!", "Nie udało się zarejestrować! spróbuj ponownie.", "ok");
+                    }
+                    
                 }
                 else
                 {
                     IsBusy = false;
-                    await Shell.Current.DisplayAlert("Brak internetu", "Brak połączenia z internetem! Włącz internet na urządzeniu.", "Ok");
+                    await Shell.Current.DisplayAlertAsync("Brak internetu", "Brak połączenia z internetem! Włącz internet na urządzeniu.", "Ok");
                     return;
                 }
             }
             catch(Exception ex)
             {
-                Debug.WriteLine(ex.Message);
-                await Shell.Current.DisplayAlert("Niepowodzenie!", "coś poszło nie tak", "ok");
+                //Debug.WriteLine(ex.Message);
+                await Shell.Current.DisplayAlertAsync("ok", ex.Message, "ok");
+                
             }
             finally
             {
