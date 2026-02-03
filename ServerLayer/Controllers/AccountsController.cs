@@ -1,6 +1,4 @@
-﻿using Models.Classes;
-
-namespace ServerLayer.Controllers
+﻿namespace ServerLayer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,7 +14,7 @@ namespace ServerLayer.Controllers
         // GET: api/Accounts
         [HttpGet]
         [Authorize(AuthenticationSchemes = "access")]
-        [Route("GetAccounts")]
+        [Route("getAccounts")]
         public async Task<IActionResult> GetAccounts()
         {
             try
@@ -79,7 +77,7 @@ namespace ServerLayer.Controllers
         }*/
 
         [HttpPatch]
-        [Route("UpdateAccount")]
+        [Route("updateAccount")]
         public async Task<IActionResult> PatchAccount([FromBody] Account account)
         {
             try
@@ -99,14 +97,15 @@ namespace ServerLayer.Controllers
         // POST: api/Accounts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Route("Register")]
+        [Route("register")]
+        [ActionName(nameof(PostAccount))]
         public async Task<IActionResult> PostAccount([FromBody] Account account)
         {
             try
             {
                 await AccountService.AddAccount(account);
 
-                return CreatedAtAction("RegisterAccount", new { id = account?.Id }, account);
+                return CreatedAtAction(nameof(PostAccount), new { id = account?.Id }, account);
             }
             catch(Exception ex)
             {

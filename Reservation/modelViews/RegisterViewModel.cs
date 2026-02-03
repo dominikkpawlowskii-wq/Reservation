@@ -29,10 +29,10 @@ namespace Reservations.modelViews
         public IConnectivity Connectivity { get; set; }
         public IReservationHttpClient ReservationHttpClient { get; set; }
         
-        public RegisterViewModel(IConnectivity connectivity, IReservationHttpClient reservationService)
+        public RegisterViewModel(IConnectivity connectivity, IReservationHttpClient reservationHttpClient)
         {
             this.Connectivity = connectivity;
-            this.ReservationHttpClient = reservationService;
+            this.ReservationHttpClient = reservationHttpClient;
         }
 
 

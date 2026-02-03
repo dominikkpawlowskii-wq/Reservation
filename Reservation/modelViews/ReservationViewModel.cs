@@ -13,9 +13,9 @@
         [ObservableProperty]
         public partial string? NumberPersons { get; set; }
         public List<string>? NumberOfPersons { get; set; }
-        public IReservationHttpClient ReservationService { get; set; }
+        public IReservationHttpClient ReservationHttpClient { get; set; }
 
-        public ReservationViewModel(IReservationHttpClient reservationService)
+        public ReservationViewModel(IReservationHttpClient reservationHttpClient)
         {
             RefreshTime();
             Index = Preferences.Get("int", 0);
@@ -24,7 +24,7 @@
             Title = "Rezerwacja";
             NumberOfPersons = [];
             AddNumberOfPersons();
-            ReservationService = reservationService;
+            ReservationHttpClient = reservationHttpClient;
         }
 
 
@@ -71,13 +71,13 @@
 
                 string? substring = NumberPersons?.Substring(0, 1);
 
-                TempObject tempObject = new TempObject
+                TempObject tempObject = new()
                 {
                     IdTable = TempClass.AdressRestaurant!.Id,
                     NumberOfSides = Convert.ToInt16(substring)
                 };
 
-                TempClass.TableRestaurants = await ReservationService.GetTableRestaurant(tempObject);
+                TempClass.TableRestaurants = await ReservationHttpClient.GetTableRestaurant(tempObject);
 
                 await Shell.Current.GoToAsync(nameof(SummaryReservationPage), true, new Dictionary<string, object>
                 {

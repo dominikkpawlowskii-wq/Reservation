@@ -93,14 +93,14 @@ namespace ServerLayer.Controllers
         }
 
         [HttpPost]
-        [Route("TableRestaurants")]
+        [Route("restaurantTable")]
         public async Task<ActionResult<RestaurantTable>> GetTableRestaurant([FromBody] TempObject tempObject)
         {
-            RestaurantTable tableRestaurant = _context.RestaurantTables.SingleOrDefault(tr => tr.NumberPlace == tempObject.NumberOfSides && tr.Id == tempObject.IdTable)!;
+            RestaurantTable restaurantTable = _context.RestaurantTables.SingleOrDefault(tr => tr.NumberPlace == tempObject.NumberOfSides && tr.Id == tempObject.IdTable)!;
 
-            if(tableRestaurant is not null)
+            if(restaurantTable is not null)
             {
-                return Ok(tableRestaurant);
+                return Ok(restaurantTable);
             }
             return NoContent();
         }

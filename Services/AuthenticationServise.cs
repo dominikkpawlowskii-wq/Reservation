@@ -1,7 +1,4 @@
-﻿using Models.Classes;
-using System.Security.Cryptography;
-
-namespace Services
+﻿namespace Services
 {
     public class AuthenticationServise : IAuthenticationService
     {
@@ -18,7 +15,7 @@ namespace Services
         public async Task<TempDataAccount> GetAccountWithtokens(Authentication authentication)
         {
             Account account = await ReservationsContext.Accounts.SingleOrDefaultAsync(account => account.Email == authentication.Email) ?? throw new Exception("Invalid login or password!");
-            var passwordMatch = PasswordHash(authentication.Password!, account.Password!);
+            var passwordMatch = PasswordVerify(authentication.Password!, account.Password!);
 
             var AccessToken = GenerateJwtAccessToken(account!);
 
@@ -85,7 +82,7 @@ namespace Services
         }
 
 
-        public bool PasswordHash(string password, string hash)
+        public bool PasswordVerify(string password, string hash)
         {
             return BCrypt.Net.BCrypt.Verify(password, hash);
         }
@@ -115,7 +112,7 @@ namespace Services
                 expires: DateTime.UtcNow.AddMinutes(240),
                 claims: claims);
 
-            return (claimKey,new JwtSecurityTokenHandler().WriteToken(jwtSequrityToken)); ;
+            return (claimKey,new JwtSecurityTokenHandler().WriteToken(jwtSequrityToken));
         }
 
     }

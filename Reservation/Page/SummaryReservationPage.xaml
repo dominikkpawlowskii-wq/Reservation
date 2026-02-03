@@ -17,10 +17,10 @@
                         <Label Style="{DynamicResource labelStyle}" Grid.Row="1" Text="{Binding TempClass.Restaurant.Name}" FontSize="30" Margin="10"/>
                         <Image Style="{DynamicResource detailPinsStyle}" Grid.Row="2" HeightRequest="40" Grid.ColumnSpan="2" VerticalOptions="Start" HorizontalOptions="Start"/>
 
-                        <Label Style="{DynamicResource labelStyle}" Text="{Binding TempClass.FullAdress}" Grid.Row="2" Grid.Column="0" VerticalOptions="Center" Grid.ColumnSpan="2" Margin="50,0,0,0"/>
+                        <Label Style="{DynamicResource labelStyle}" Text="{Binding TempClass.FullAddress}" Grid.Row="2" Grid.Column="0" VerticalOptions="Center" Grid.ColumnSpan="2" Margin="50,0,0,0"/>
 
                         <Label Grid.Row="3" Text="{Binding TempClass.Date}" HorizontalOptions="Center" Grid.ColumnSpan="2"/>
-                        <Label  Grid.Row="4" Text="{Binding TempClass.Time}" HorizontalOptions="Center"/>
+                        <Label Grid.Row="4" Text="{Binding TempClass.Time}" HorizontalOptions="Center"/>
                         <Label Grid.Row="4" Text="{Binding TempClass.NumberOfPerson}" Grid.Column="2" HorizontalOptions="Center"/>
                     </Grid>
                 </Border>

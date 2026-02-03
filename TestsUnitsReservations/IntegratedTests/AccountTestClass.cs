@@ -64,7 +64,7 @@ namespace TestsUnitsReservations.IntegratedTests
             }
         }
         [TestMethod]
-        [TestCategory("authenticationFailed")]
+        [TestCategory("AuthenticationFailed")]
         public async Task TestIntegratet_shouldLoginFailed()
         {
 

@@ -15,3 +15,4 @@ global using PaypalServerSdk.Standard.Authentication;
 global using PaypalServerSdk.Standard.Controllers;
 global using Microsoft.Extensions.Logging;
 global using System.Globalization;
+global using System.Security.Cryptography;

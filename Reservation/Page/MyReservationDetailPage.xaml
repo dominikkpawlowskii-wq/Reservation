@@ -18,7 +18,7 @@
 
                     <HorizontalStackLayout Spacing="5">
                         <Image Style="{DynamicResource detailPinsStyle}" WidthRequest="40" />
-                        <Label Text="{Binding TempClass.FullAdress}" VerticalOptions="Center" FontAttributes="Bold" Style="{DynamicResource labelStyle}"/>
+                        <Label Text="{Binding TempClass.FullAddress}" VerticalOptions="Center" FontAttributes="Bold" Style="{DynamicResource labelStyle}"/>
 
                     </HorizontalStackLayout>
 

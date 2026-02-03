@@ -17,7 +17,7 @@
         <Label Style="{DynamicResource labelStyle}" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Center" Text="{Binding TempClass.Restaurant.Name}" FontSize="20" FontAttributes="Bold"/>
         <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" HorizontalOptions="Center">
             <Image Style="{DynamicResource detailPinsStyle}" WidthRequest="30" HorizontalOptions="End"/>
-            <Label Style="{DynamicResource labelStyle}" Text="{Binding TempClass.FullAdress}" VerticalOptions="Center"/>
+            <Label Style="{DynamicResource labelStyle}" Text="{Binding TempClass.FullAddress}" VerticalOptions="Center"/>
         </HorizontalStackLayout>
         <DatePicker Grid.Row="2" Date="{Binding Date}" Grid.ColumnSpan="2" Grid.Column="0" MinimumDate="{x:Static sys:DateTime.Now}" Style="{DynamicResource DateTextColorStyle}"/>
         <TimePicker Grid.Row="3" Grid.Column="0" Time="{Binding Time}" Style="{DynamicResource TimeTextColorStyle}"/>

@@ -13,7 +13,7 @@
 
         // GET: api/Restaurants
         [HttpGet]
-        [Route("Restaurants")]
+        [Route("restaurants")]
         public async Task<ActionResult<IEnumerable<Restaurant>>> GetRestaurants()
         {
             return await _context.Restaurants.ToListAsync();

@@ -7,17 +7,17 @@ namespace Reservations.modelViews
     public partial class MapViewModel : BaseViewModel
     {
         public INavigationDataService NavigationDataService { get; set; }
-        private readonly IGeocoding _geocoding;
+        public IGeocoding Geocoding { get; set; }
 
         public ObservableCollection<Restaurant>? Restaurants { get; set; }
         public  ObservableCollection<RestaurantAddress>? Adresses { get; set; }
         public  ObservableCollection<RestaurantImage>? RestaurantImages { get; set; }
 
-        private readonly Dictionary<string, Location> _locationsCache = [];
-        private readonly Dictionary<string, Placemark> _placemarksCache = [];
+        public readonly Dictionary<string, Location> LocationsCache = [];
+        public readonly Dictionary<string, Placemark> PlacemarksCache = [];
 
         [ObservableProperty]
-        public partial MapView MapView { get; set; }
+        public partial MapView? MapView { get; set; }
         [ObservableProperty]
         public partial bool IsVisible {  get; set; }
         [ObservableProperty]
@@ -27,8 +27,8 @@ namespace Reservations.modelViews
         public MapViewModel(IGeocoding geocoding, INavigationDataService navigationDataService)
         {
            
-            this._geocoding = geocoding;
-            this.NavigationDataService = navigationDataService;
+            Geocoding = geocoding;
+            NavigationDataService = navigationDataService;
 
             Reload();
 
@@ -44,19 +44,19 @@ namespace Reservations.modelViews
         {
             e.Handled = true;
 
-            Location location = _locationsCache.FirstOrDefault(l => l.Value.Latitude == e.Pin.Position.Latitude && l.Value.Longitude == e.Pin.Position.Longitude).Value;
+            Location location = LocationsCache.FirstOrDefault(l => l.Value.Latitude == e.Pin.Position.Latitude && l.Value.Longitude == e.Pin.Position.Longitude).Value;
 
             if (location != null)
             {
                 string locationKey = $"{location.Latitude},{location.Longitude}";
 
-                if(!_placemarksCache.ContainsKey(locationKey))
+                if(!PlacemarksCache.ContainsKey(locationKey))
                 {
                     
-                    var placemarks = await _geocoding.GetPlacemarksAsync(location.Latitude, location.Longitude);
+                    var placemarks = await Geocoding.GetPlacemarksAsync(location.Latitude, location.Longitude);
 
                     Placemark placemark = placemarks.FirstOrDefault()!;
-                    _placemarksCache.Add(locationKey, placemark);
+                    PlacemarksCache.Add(locationKey, placemark);
 
                    
                     AssignRestaurantAndadresToVariables(placemark);
@@ -64,7 +64,7 @@ namespace Reservations.modelViews
                 else
                 {
                     string lKey = $"{location.Latitude},{location.Longitude}";
-                    var placemark = _placemarksCache.SingleOrDefault(placemark => placemark.Key == lKey).Value;
+                    var placemark = PlacemarksCache.SingleOrDefault(placemark => placemark.Key == lKey).Value;
                     AssignRestaurantAndadresToVariables(placemark);
                 }
 
@@ -77,16 +77,16 @@ namespace Reservations.modelViews
 
         private async Task<Location> GetCachedlocationAsync(string adress)
         {
-            if(_locationsCache.ContainsKey(adress))
+            if(LocationsCache.TryGetValue(adress, out Location? value))
             {
-                return _locationsCache[adress];
+                return value;
             }
 
-            var locations = await _geocoding.GetLocationsAsync(adress);
+            var locations = await Geocoding.GetLocationsAsync(adress);
             var location = locations.FirstOrDefault();
             if (location != null)
             {
-                _locationsCache[adress] = location;
+                LocationsCache[adress] = location;
             }
 
             return location!;

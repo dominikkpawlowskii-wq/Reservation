@@ -9,16 +9,15 @@
              Style="{DynamicResource navBarBackgroundColorStyle}">
     <VerticalStackLayout Padding="10" Spacing="15">
         <Label Text="{Binding Description}" HorizontalTextAlignment="Justify" Style="{DynamicResource labelStyle}"/>
-
         <BoxView HeightRequest="2" Style="{DynamicResource boxViewStyle}"/>
         <Label Text="Wersja aplikacji" Style="{DynamicResource labelStyle}"/>
-        <Label Text="{Binding AplicationVerion}" Style="{DynamicResource labelStyle}"/>
+        <Label Text="{Binding ApplicationVersion}" Style="{DynamicResource labelStyle}"/>
         <BoxView HeightRequest="2" Style="{DynamicResource boxViewStyle}"/>
         <Label Text="Model telefonu" Style="{DynamicResource labelStyle}"/>
         <Label Text="{Binding PhoneModel}" Style="{DynamicResource labelStyle}"/>
         <BoxView HeightRequest="2" Style="{DynamicResource boxViewStyle}"/>
         <Label Text="Wersja systemu" Style="{DynamicResource labelStyle}"/>
-        <Label Text="{Binding AdroidVersion}" Style="{DynamicResource labelStyle}"/>
+        <Label Text="{Binding AndroidVersion}" Style="{DynamicResource labelStyle}"/>
         <BoxView HeightRequest="2" Style="{DynamicResource boxViewStyle}"/>
     </VerticalStackLayout>
 </ContentPage>

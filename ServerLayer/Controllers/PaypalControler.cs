@@ -18,7 +18,7 @@ namespace ServerLayer.Controllers
         }
 
         [HttpPost]
-        [Route("Order")]
+        [Route("order")]
         public async Task<IActionResult> CreateOrder([FromBody] Reservation reservation)
         {
             ApiResponse<Order> result = await PaypalApi.CreateOrderByPaypal(reservation);
@@ -30,7 +30,7 @@ namespace ServerLayer.Controllers
             return BadRequest();
         }
         [HttpPost]
-        [Route("Capture")]
+        [Route("capture")]
         public async Task<IActionResult> CaptureOrder([FromBody]string OrderId)
         {
                 ApiResponse<Order> result = await PaypalApi.CapturePayment(OrderId!);

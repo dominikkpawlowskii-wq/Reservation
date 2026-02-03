@@ -14,12 +14,14 @@ namespace Reservations.modelViews
         public IReservationHttpClient ReservationHttpClient { get; set; }
         public IConnectivity Connectivity { get; set; }
         public ILoginService UserService { get; set; }
-        public LoginViewModel(IConnectivity connectivity, IReservationHttpClient reservationService, ILoginService userService)
+        public ISecureStorage? SecureStorage { get; set; }
+        public LoginViewModel(ISecureStorage secureStorage, IConnectivity connectivity, IReservationHttpClient reservationService, ILoginService userService)
         {
             Title = "";
             Connectivity = connectivity;
             ReservationHttpClient = reservationService;
             UserService = userService;
+            SecureStorage = secureStorage;
         }
         [RelayCommand]
         private  async Task GoToRegisterPage()
@@ -65,7 +67,9 @@ namespace Reservations.modelViews
                     
                     if(dataAccount is not null)
                     {
-                        await Task.Delay(1000);
+                        await Task.WhenAll(SecureStorage!.SetAsync($"{dataAccount.Account?.Email!}_access", dataAccount.Tokens?.AccessToken!),
+                            SecureStorage!.SetAsync($"{dataAccount.Account?.Email!}_refresh", dataAccount.Tokens?.RefreshToken!));
+
                         UserService.Login(dataAccount.Account!, dataAccount.Tokens!);
                         await Shell.Current.GoToAsync($"//mainApp/search", true);
                     }

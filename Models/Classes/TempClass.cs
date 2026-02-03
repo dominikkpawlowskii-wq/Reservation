@@ -21,7 +21,7 @@
 
         public TimeSpan? Timesp { get; set; }
 
-        public string FullAdress => GetFullAdressRestaurant();
+        public string FullAddress => GetFullAdressRestaurant();
 
         public string GetFullAdressRestaurant()
         {

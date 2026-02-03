@@ -2,18 +2,18 @@
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdressRestaurantsController : ControllerBase
+    public class RestaurantAddressesController : ControllerBase
     {
         private readonly ReservationsContext _context;
 
-        public AdressRestaurantsController(ReservationsContext context)
+        public RestaurantAddressesController(ReservationsContext context)
         {
             _context = context;
         }
 
         // GET: api/AdressRestaurants
         [HttpGet]
-        [Route("AdressRestaurants")]
+        [Route("restaurantAddresses")]
         public async Task<ActionResult<IEnumerable<RestaurantAddress>>> GetAdressesRestaurant()
         {
             return await _context.RestaurantAddresses.ToListAsync();

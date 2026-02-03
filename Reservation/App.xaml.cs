@@ -3,7 +3,7 @@ namespace Reservations
 {
     public partial class App : Microsoft.Maui.Controls.Application
     {
-        public IReservationHttpClient ReservationService { get; set; }
+        public IReservationHttpClient ReservationHttpClient { get; set; }
         public INavigationDataService NavigationDataService { get; set; }
         public ILoginService UserService { get; set; }
 
@@ -15,7 +15,7 @@ namespace Reservations
             bool Istoggled = Preferences.Get("IsToggled", false);
             ApplyTheme(Istoggled);
 
-            ReservationService = reservationService;
+            ReservationHttpClient = reservationService;
             NavigationDataService = navigationDataService;
             this.UserService = userService;
         }
@@ -53,15 +53,15 @@ namespace Reservations
             else if (uri.Scheme == "https" && uri.Host == "myapp" && uri.Segments.Last() == "Capture/")
             {
 
-                var resutlCapture = await ReservationService.CaptureOrder(OrderId);
+                var resultCapture = await ReservationHttpClient.CaptureOrder(OrderId);
 
                 var account = UserService.GetAccount();
 
-                if (resutlCapture.Data.Status == OrderStatus.Completed)
+                if (resultCapture.Data.Status == OrderStatus.Completed)
                 {
                     account.NumberOfPoints = points;
 
-                    await Task.WhenAll(ReservationService.CreateReservation(reservation),ReservationService.UpdateAccountPoints(account));
+                    await Task.WhenAll(ReservationHttpClient.CreateReservation(reservation),ReservationHttpClient.UpdateAccountPoints(account));
                     await Shell.Current.DisplayAlertAsync("Rezerwacja powiodła się!", "Udało się dokonać rezerwacji! możesz zobaczyc rezerwacje w zakładce rezerwacje", "ok");
                     await Shell.Current.GoToAsync("//mainApp/search", true); 
                 }

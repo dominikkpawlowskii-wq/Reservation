@@ -45,6 +45,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<MapViewModel>();
         builder.Services.AddSingleton<SearchViewModel>();
         builder.Services.AddSingleton<IGeocoding>(Geocoding.Default);
+        builder.Services.AddSingleton<ISecureStorage>(SecureStorage.Default);
 
 #if DEBUG
         builder.Logging.AddDebug();

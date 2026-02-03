@@ -16,7 +16,7 @@ namespace Reservations.modelViews
         public ObservableCollection<Restaurant>? FiltrRestaurant { get; set; }
         public List<string> NumberOfPersons { get; set; }
 
-        public INavigationDataService navigationDataService { get; set; }
+        public INavigationDataService NavigationDataService { get; set; }
         public IReservationHttpClient ReservationService { get; set; }
         public ILoginService UserService { get; set; }
 
@@ -34,7 +34,7 @@ namespace Reservations.modelViews
 
             AddNumberOfPersons();
             _ = LoadRestaurantAndAdressesRestaurantAndRestaurantImages();
-            this.navigationDataService = navigationDataService;
+            this.NavigationDataService = navigationDataService;
         }
 
         public async Task LoadRestaurantAndAdressesRestaurantAndRestaurantImages()
